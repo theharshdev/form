@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Form Validation</title>
+	<!-- Bootstrap CSS CDN Link -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		.row {
+			height: 100vh;
+		}
+
+		body {
+			height: 100vh;
+			padding: 0;
+			margin: 0;
+		}
+
+		.form-control {
+			border: 2px solid lightgray;
+			background: white;
+		}
+
+		.form-control:focus {
+			border: 2px solid lightgray;
+			box-shadow: none;
+			background: white;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row justify-content-center align-items-center">
+			<div class="col-lg-7 text-center">
+				<h3 class="text-center text-primary mb-4">Please Fill The Form</h3>
+				<form class="form" id="myform" onsubmit="return formValidate()" action="" method="post">
+					<input id="name" type="name" class="form-control w-100 py-2 px-3 fw-light fs-4"
+						placeholder="Enter your full name">
+					<p class="mb-3 p-0 text-danger text-start" id="nameErr"></p>
+					<input id="mail" type="mail" class="form-control w-100 py-2 px-3 fw-light fs-4"
+						placeholder="Enter your email">
+					<p class="mb-3 p-0 text-danger text-start" id="mailErr"></p>
+					<input id="num" type="number" class="form-control w-100 py-2 px-3 fw-light fs-4"
+						placeholder="Enter your contact number">
+					<p class="mb-3 p-0 text-danger text-start" id="numErr"></p>
+					<button class="btn btn-primary fs-4 px-5 py-2 mt-3 d-block w-100" type="submit">Send!</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		let name = document.getElementById('name');
+		let mail = document.getElementById('mail');
+		let num = document.getElementById('num');
+		let nameErr = document.getElementById('nameErr');
+		let mailErr = document.getElementById('mailErr');
+		let numErr = document.getElementById('numErr');
+		let nameReg = /^[a-zA-Z]+ [a-zA-Z]+$/;
+		let mailReg = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/;
+		let numReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+		let flagName, flagMail, flagNum;
+
+		function formValidate() {
+			if (name.value == "") {
+				nameErr.innerHTML = "This Field Can't be Empty";
+				flagName = 0;
+			} else if (name.value.length < 3) {
+				nameErr.innerHTML = "Name Should have 3 or more than 3 Letters";
+				flagName = 0;
+			} else if (!nameReg.test(name.value)) {
+				nameErr.innerHTML = "Please Enter Your Full Name";
+				flagName = 0;
+			} else {
+				nameErr.innerHTML = "";
+				flagName = 1;
+			}
+			if (mail.value == "") {
+				mailErr.innerHTML = "This Field Can't be Empty";
+				flagMail = 0;
+			} else if (!mailReg.test(mail.value)) {
+				mailErr.innerHTML = "Enter a Valid Mail";
+				flagMail = 0;
+			} else {
+				mailErr.innerHTML = "";
+				flagMail = 1;
+			}
+			if (num.value == "") {
+				numErr.innerHTML = "This Field Can't be Empty";
+				flagNum = 0;
+			} else if (num.value.length < 10) {
+				numErr.innerHTML = "Number Should have 10 Digits";
+				flagNum = 0;
+			} else if (!numReg.test(num.value)) {
+				numErr.innerHTML = "Enter a Valid Contact Number";
+				flagNum = 0;
+			} else {
+				numErr.innerHTML = "";
+				flagNum = 1;
+			}
+			if (flagName && flagMail && flagNum) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	</script>
+
+	<!-- Bootstrap JS CDN Link -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
